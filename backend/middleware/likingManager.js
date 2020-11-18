@@ -3,11 +3,11 @@ const Sauce = require('../models/sauce');
 module.exports = (req,res,next) => {
     Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
-        if(sauce.usersLiked.indexOf(req.body.userId)<0) {
+        if(req.body.like==1 && sauce.usersLiked.indexOf(req.body.userId)<0) {
             sauce.usersLiked.push(req.body.userId);
             sauce.likes+=1;
         } 
-        if (sauce.usersDisliked.indexOf(req.body.userId)<0) {
+        else if (req.body.like==-1 && sauce.usersDisliked.indexOf(req.body.userId)<0) {
             sauce.usersDisliked.push(req.body.userId);
             sauce.dislikes+=1;
         } 

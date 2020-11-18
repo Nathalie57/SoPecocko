@@ -5,11 +5,14 @@ const mongoose = require('mongoose');
 const app = express();
 const path = require('path');
 const helmet = require('helmet');
-
+const env = require('dotenv').config();
+if(env.error) {
+    throw env.error;
+}
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://Nathalie:nPt6Yz9ln091AcZp@cluster0.ouyoj.mongodb.net/<dbname>?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/<dbname>?retryWrites=true&w=majority`,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -29,6 +32,7 @@ app.use(helmet());
 
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
