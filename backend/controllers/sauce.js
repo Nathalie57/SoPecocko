@@ -1,6 +1,12 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
+/**
+ * Sauce creation
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ */
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   delete sauceObject._id;
@@ -17,6 +23,12 @@ exports.createSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
+/**
+ * Get one sauce with details
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ */
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({
     _id: req.params.id
@@ -33,6 +45,12 @@ exports.getOneSauce = (req, res, next) => {
   );
 };
 
+/**
+ * Update one sauce
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ */
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file ?
     {
@@ -44,6 +62,12 @@ exports.modifySauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
+/**
+ * Like or dislike one sauce
+ * @param object} req 
+ * @param object} res 
+ * @param object} next 
+ */
 exports.likeSauce = (req, res, next) => {
   const sauceObject = req.body.sauce;
   Sauce.updateOne({ _id: req.params.id }, {$set: {
@@ -58,6 +82,12 @@ exports.likeSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
+/**
+ * Delete one sauce
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ */
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
@@ -71,6 +101,12 @@ exports.deleteSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+/**
+ * Get all sauces from database
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ */
 exports.getAllSauces = (req, res, next) => {
   Sauce.find().then(
     (sauces) => {

@@ -4,10 +4,10 @@ const jwt = require('jsonwebtoken');
 const maskData = require('maskdata');
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * Create an acount for login
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
  */
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -23,6 +23,12 @@ exports.signup = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+/**
+ * Login to the application
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ */
 exports.login = (req, res, next) => {
     User.findOne({ email: maskData.maskEmail2(req.body.email) })
       .then(user => {

@@ -1,5 +1,11 @@
 const Sauce = require('../models/sauce');
 
+/**
+ * liking system
+ * @param {object} req 
+ * @param {object} res 
+ * @param {object} next 
+ */
 module.exports = (req,res,next) => {
     Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
